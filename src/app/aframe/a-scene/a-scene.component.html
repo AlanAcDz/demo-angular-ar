@@ -1,0 +1,15 @@
+<a-scene 
+    vr-mode-ui="enabled: false" 
+    embedded
+    arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;' 
+    *ngIf="showContent">
+    <a-entity
+        gps-camera
+        rotation-reader></a-entity>
+    <a-entity
+        obj-model="obj: url(assets/Italika_Vortx_300/VORTX_300.obj); mtl: url(assets/Italika_Vortx_300/VORTX_300.mtl)"
+        rotation="0 180 0"
+        scale="0.15 0.15 0.15"
+        gps-entity-place="longitude: {{ longitude }}; latitude: {{ latitude }};"
+        ></a-entity>
+</a-scene>
