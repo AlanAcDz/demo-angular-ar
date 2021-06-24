@@ -8,13 +8,14 @@ interface Scripts {
 
 export const ScriptStore: Scripts[] = [
   { name: 'aframe', src: 'https://aframe.io/releases/1.0.4/aframe.min.js' },
-  { name: 'arjs', src: 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js' }
+  { name: 'arjs', src: 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js' },
+  { name: 'aframe-look-at', src: 'https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js' },
+  { name: 'aframe-loaders', src: 'https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js' },
 ];
 
 @Injectable()
 export class DynamicScriptLoaderService {
   private scripts: any = {};
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
   ) {

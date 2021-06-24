@@ -15,12 +15,12 @@ export class ASceneComponent implements OnInit {
   ) { }
   async ngOnInit() {
     await this.setPosition();
-    setTimeout(() => this.showContent = true, 1000);
+    setTimeout(() => this.showContent = true, 2000);
     // this.loadScripts();
     // window.addEventListener('load', (event) => {});
   }
   private loadScripts() {
-    this.scriptLoader.load('aframe', 'arjs')
+    this.scriptLoader.load('aframe', 'arjs', 'aframe-look-at', 'aframe-loaders')
       .then(() => this.showContent = true)
       .catch(error => console.error(error));
   }
@@ -33,7 +33,6 @@ export class ASceneComponent implements OnInit {
   }
   private async setPosition() {
     const { latitude, longitude } = await this.getCurrentPosition();
-    console.log({ latitude, longitude });
     this.latitude = latitude;
     this.longitude = longitude;
   }
