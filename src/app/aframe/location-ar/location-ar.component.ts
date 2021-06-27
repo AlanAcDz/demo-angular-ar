@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicScriptLoaderService } from '../dynamic-script-loader.service';
 
 @Component({
-  selector: 'app-a-scene',
-  templateUrl: './a-scene.component.html',
-  styleUrls: ['./a-scene.component.scss']
+  selector: 'app-location-ar',
+  templateUrl: './location-ar.component.html',
+  styleUrls: ['./location-ar.component.scss']
 })
-export class ASceneComponent implements OnInit {
+export class LocationArComponent implements OnInit {
   showContent = false;
   latitude!: number;
   longitude!: number;

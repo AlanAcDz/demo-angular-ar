@@ -1,14 +1,17 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicScriptLoaderService } from './dynamic-script-loader.service';
-import { ASceneComponent } from './a-scene/a-scene.component';
+import { LocationArComponent } from './location-ar/location-ar.component';
+import { MarkerArComponent } from './marker-ar/marker-ar.component';
 
 @NgModule({
   declarations: [
-    ASceneComponent,
+    LocationArComponent,
+    MarkerArComponent,
   ],
   exports: [
-    ASceneComponent
+    LocationArComponent,
+    MarkerArComponent,
   ],
   imports: [
     CommonModule
