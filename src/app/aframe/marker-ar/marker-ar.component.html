@@ -8,6 +8,8 @@
     <a-assets>
         <a-asset-item id="tree-obj" src="assets/Italika_Vortx_300/VORTX_300.obj"></a-asset-item>
         <a-asset-item id="tree-mtl" src="assets/Italika_Vortx_300/VORTX_300.mtl"></a-asset-item>
+        <a-asset-item id="tree-gltf" src="assets/Italika_Vortx_300/VORTX_300.gltf"></a-asset-item>
+        <a-asset-item id="tree-fbx" src="assets/Italika_Vortx_300/VORTX.fbx"></a-asset-item>
     </a-assets>
     <a-marker
         preset="hiro"
@@ -15,12 +17,17 @@
         emitevents="true"
         cursor="fuse: false; rayOrigin: mouse;">
         <a-entity
+            fbx-model="url(assets/Italika_Vortx_300/VORTX.fbx)"
+            position="0 0 0"
+            gesture-handler
+        ></a-entity>
+        <!-- <a-entity
             obj-model="obj: #tree-obj; mtl: #tree-mtl"
             rotation="0 0 0"
             position="0 0 0"
             scale="0.01 0.01 0.01"
             gesture-handler
-        ></a-entity>
+        ></a-entity> -->
     </a-marker>
     <a-entity camera></a-entity>
 </a-scene>
