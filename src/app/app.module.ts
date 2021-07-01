@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AframeModule } from './aframe/aframe.module';
+import { ThreeModule } from './three/three.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { AframeModule } from './aframe/aframe.module';
   imports: [
     BrowserModule,
     AframeModule,
+    ThreeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
