@@ -1,10 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, Renderer2, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { ModelLoaderService, ModelTypes } from '../model-loader.service';
+import { ThreeJs } from '../three.class';
 
 @Component({
   selector: 'app-three-scene',
@@ -14,80 +11,28 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 export class ThreeSceneComponent implements AfterViewInit {
   @ViewChild('threeContainer') threeContainer!: ElementRef<HTMLElement>;
   @ViewChild('video') videoElement!: ElementRef<HTMLVideoElement>;
-  scene!: THREE.Scene;
-  camera!: THREE.PerspectiveCamera;
-  threeRenderer!: THREE.WebGLRenderer;
-  geometryMesh!: THREE.Mesh;
-  model3D!: THREE.Object3D;
-  controls!: OrbitControls;
-  private modelPath = 'assets/Italika_Vortx_300/VORTX_300';
+  three!: ThreeJs;
+  private modelPath = 'assets/Italika_Vortx_300/VORTX_300_2';
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
+    private ngRenderer: Renderer2,
+    private modelLoader: ModelLoaderService,
   ) { }
   async ngAfterViewInit() {
     await this.showWebcamVideo();
-    this.createThreeScene();
-    await this.loadModel();
-    this.animate();
+    await this.createThreeScene();
   }
-  private createThreeScene() {
+  @HostListener('window:resize', ['$event'])
+  onResize({ target }: any) {
+    this.three.onResize(target.innerWidth, target.innerHeight);
+  }
+  private async createThreeScene() {
     const { innerWidth, innerHeight } = this.document.defaultView as Window;
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000);
-    this.threeRenderer = new THREE.WebGLRenderer({ alpha: true });
-    this.threeRenderer.setClearColor('#fff', 0);
-    this.threeRenderer.setSize(innerWidth, innerHeight);
-    this.renderer.appendChild(this.threeContainer.nativeElement, this.threeRenderer.domElement);
-    this.controls = new OrbitControls(this.camera, this.threeRenderer.domElement);
-  }
-  private animate() {
-    requestAnimationFrame(this.animate.bind(this));
-    this.controls.update();
-    this.threeRenderer.render(this.scene, this.camera);
-  }
-  private async loadModel() {
-    this.model3D = await this.loadFbxModel();
-    this.model3D.scale.set(0.05, 0.05, 0.05);
-    // this.model3D.scale.set(0.2, 0.2, 0.2);
-    this.centerModel();
-    this.camera.position.z = 5;
-    this.controls.update();
-  }
-  private centerModel() {
-    const box = new THREE.Box3().setFromObject(this.model3D);
-    box.getCenter(this.model3D.position);
-    this.model3D.position.multiplyScalar(-1);
-    const pivot = new THREE.Group();
-    this.scene.add(pivot);
-    pivot.add(this.model3D);
-  }
-  private loadGltfModel() {
-    return new Promise<THREE.Group>((resolve, reject) => {
-      const loader = new GLTFLoader();
-      loader.load(`${this.modelPath}.glb`, 
-        (gltf) => resolve(gltf.scene), undefined,
-        (error) => reject(error)
-      );
-    });
-  }
-  private loadFbxModel() {
-    return new Promise<THREE.Group>((resolve, reject) => {
-      const loader = new FBXLoader();
-      loader.load(`${this.modelPath}_2.fbx`,
-        (fbx) => resolve(fbx), undefined,
-        (error) => reject(error)
-      );
-    });
-  }
-  private loadObjModel() {
-    return new Promise<THREE.Group>((resolve, reject) => {
-      const loader = new OBJLoader();
-      loader.load(`${this.modelPath}.obj`,
-        (obj) => resolve(obj), undefined,
-        (error) => reject(error)
-      );
-    });
+    this.three = new ThreeJs(innerWidth, innerHeight);
+    this.ngRenderer.appendChild(this.threeContainer.nativeElement, this.three.renderer.domElement);
+    const model3D = await this.modelLoader.load3DModel(this.modelPath, ModelTypes.FBX);
+    this.three.loadModel(model3D);
+    this.three.animate();
   }
   private async showWebcamVideo() {
     const video = this.videoElement.nativeElement;
