@@ -12,6 +12,8 @@ export class ThreeJs {
         this.renderer.setSize(width, height);
         this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        const ambientLight = new THREE.AmbientLight(0xffffff);
+        this.scene.add(ambientLight);
     }
     animate() {
         requestAnimationFrame(this.animate.bind(this));

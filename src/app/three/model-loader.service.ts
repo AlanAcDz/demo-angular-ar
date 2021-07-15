@@ -26,7 +26,7 @@ export class ModelLoaderService {
   private loadGltfModel(path: string) {
     return new Promise<THREE.Group>((resolve, reject) => {
       const loader = new GLTFLoader();
-      loader.load(`${path}.gltf`, 
+      loader.load(`${path}.glb`, 
         (gltf) => resolve(gltf.scene), undefined,
         (error) => reject(error)
       );

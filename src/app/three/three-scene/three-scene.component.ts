@@ -12,7 +12,7 @@ export class ThreeSceneComponent implements AfterViewInit {
   @ViewChild('threeContainer') threeContainer!: ElementRef<HTMLElement>;
   @ViewChild('video') videoElement!: ElementRef<HTMLVideoElement>;
   three!: ThreeJs;
-  private modelPath = 'assets/Italika_Vortx_300/VORTX_300_2';
+  private modelPath = 'assets/Italika_Vortx_300/VORTX_300';
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private ngRenderer: Renderer2,
@@ -30,7 +30,7 @@ export class ThreeSceneComponent implements AfterViewInit {
     const { innerWidth, innerHeight } = this.document.defaultView as Window;
     this.three = new ThreeJs(innerWidth, innerHeight);
     this.ngRenderer.appendChild(this.threeContainer.nativeElement, this.three.renderer.domElement);
-    const model3D = await this.modelLoader.load3DModel(this.modelPath, ModelTypes.FBX);
+    const model3D = await this.modelLoader.load3DModel(this.modelPath, ModelTypes.GLTF);
     this.three.loadModel(model3D);
     this.three.animate();
   }
