@@ -28,7 +28,8 @@ export class ThreeJs {
     loadModel(model3D: THREE.Object3D) {
         this.model3D = model3D;
         this.model3D.scale.set(0.05, 0.05, 0.05);
-        // model3D.scale.set(0.2, 0.2, 0.2);
+        this.model3D.rotateY(45 * (Math.PI / 180));
+        this.model3D.rotateZ(5 * (Math.PI / 180));
         this.centerModel(this.model3D);
         this.camera.position.z = 5;
         this.controls.update();
