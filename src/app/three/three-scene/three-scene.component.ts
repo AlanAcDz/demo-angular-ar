@@ -36,7 +36,10 @@ export class ThreeSceneComponent implements AfterViewInit {
   }
   private async showWebcamVideo() {
     const video = this.videoElement.nativeElement;
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: { facingMode: 'environment' }
+    });
     video.srcObject = stream;
     video.onloadedmetadata = () => {
       video.play();
