@@ -12,8 +12,7 @@ export class ThreeJs {
         this.renderer.setSize(width, height);
         this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        const ambientLight = new THREE.AmbientLight(0xffffff);
-        this.scene.add(ambientLight);
+        this.addLights();
     }
     animate() {
         requestAnimationFrame(this.animate.bind(this));
@@ -27,8 +26,8 @@ export class ThreeJs {
     }
     loadModel(model3D: THREE.Object3D) {
         this.model3D = model3D;
-        this.model3D.scale.set(0.05, 0.05, 0.05);
-        this.model3D.rotateY(45 * (Math.PI / 180));
+        this.model3D.scale.set(0.3, 0.3, 0.3);
+        this.model3D.rotateY(140 * (Math.PI / 180));
         this.model3D.rotateZ(5 * (Math.PI / 180));
         this.centerModel(this.model3D);
         this.camera.position.z = 5;
@@ -41,5 +40,11 @@ export class ThreeJs {
         const pivot = new THREE.Group();
         this.scene.add(pivot);
         pivot.add(model3D);
+    }
+    private addLights() {
+        const ambientLight = new THREE.AmbientLight(0xffffff);
+        const pointLight = new THREE.PointLight(0xffffff);
+        pointLight.position.set(5, 10, 5);
+        this.scene.add(ambientLight, pointLight);
     }
 }
